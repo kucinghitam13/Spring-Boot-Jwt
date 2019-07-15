@@ -3,6 +3,7 @@ package com.example.springbootjwttest.service;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@Autowired
+//	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
 	public String signIn(String username, String password) {
