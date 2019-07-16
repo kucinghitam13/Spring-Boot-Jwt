@@ -14,6 +14,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.example.springbootjwttest.entity.Role;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -34,26 +36,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf()
+		http.cors()
+			.and()
+			.csrf()
 				.disable()
 			.headers()
-				.frameOptions().disable();
-		
-		http.authorizeRequests()
+				.frameOptions().disable()
+			.and()
+			.authorizeRequests()
 //				.antMatchers("/**").permitAll()
 				.antMatchers(HttpMethod.POST, "/users/signin").permitAll()
 				.antMatchers(HttpMethod.POST, "/users/signup").permitAll()
-				.anyRequest().authenticated();
-		
-		http.exceptionHandling()
-			.accessDeniedPage("/login");
-		
-//		no session
-		http.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-//		apply jwt
-		http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
+				.antMatchers("/users/me").hasRole("ADMIN")
+				.anyRequest().authenticated()
+			.and()
+			.exceptionHandling()
+				.accessDeniedPage("/login")
+			.and()
+//			no session
+			.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
+//			apply jwt
+			.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
 		
 		//		super.configure(http);
 	}
