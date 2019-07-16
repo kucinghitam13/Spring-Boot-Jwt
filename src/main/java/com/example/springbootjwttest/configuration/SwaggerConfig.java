@@ -33,7 +33,7 @@ public class SwaggerConfig {
         .build()//
         .apiInfo(metadata())//
         .useDefaultResponseMessages(false)//
-//        .securitySchemes(new ArrayList<>(Arrays.asList(new ApiKey("Bearer %token", "Authorization", "Header"))))//
+        .securitySchemes(new ArrayList<>(Arrays.asList(new ApiKey("Bearer %token", "Authorization", "Header"))))//
         .tags(new Tag("users", "Operations about users"))//
         .tags(new Tag("ping", "Just a ping"))//
         .genericModelSubstitutes(Optional.class);
