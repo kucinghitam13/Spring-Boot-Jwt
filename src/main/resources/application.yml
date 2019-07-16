@@ -28,7 +28,11 @@ logging:
   level:
     web: trace
     
-
+security:
+  jwt:
+    token:
+      secret-key: mySecretKey
+      expire-length: 3600000 # 5 minutes duration by default: 5 minutes * 60 seconds * 1000 miliseconds
     
 UserController:
   signin: Authenticates user and returns its JWT token.
